@@ -3,7 +3,7 @@ Observe a youtube channel for video privacy status. The script will write and up
 
 ## Usage
 ```
-python3 yt-privacy-analysis.py
+python3 yt-privacy.py
 ```
 
 ## Requirements
