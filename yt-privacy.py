@@ -60,7 +60,7 @@ field_names = ['url', 'title', 'upload_time', 'keywords', 'privacystatus',
                'last_updated', 'timestamp', 'description', 'length']
 
 def main(args):
-    new_channel_vidurls = {channel : { url:{} for url in Channel(channel).video_urls[:2]} for channel in args.channels}
+    new_channel_vidurls = {channel : { url:{} for url in Channel(channel).video_urls[:args.count]} for channel in args.channels}
     channel_data = load_json_data(args.input)
 
     new_channels_urls_pairs = [(channel, key) for channel, value in new_channel_vidurls.items() for key in value.keys()]
@@ -108,6 +108,7 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='YouTube privacy status checker')
     parser.add_argument('channels', nargs='+', help='YouTube channel URLs')
+    parser.add_argument('--count', type=int, default=10, help='Number of videos to check (per channel)')
     parser.add_argument('--max-retries', type=int, default=10, help='Maximum number of retries for retrieving video data')
     parser.add_argument('--input', default='video_data.json', help='Input file name')
     parser.add_argument('--output', default='video_data.json', help='Output file name')
