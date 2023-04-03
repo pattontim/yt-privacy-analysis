@@ -6,6 +6,10 @@ Observe a youtube channel for video privacy status. The script will write and up
 py yt-privacy.py --help
 ```
 
+```
+py .\yt-privacy.py "https://www.youtube.com/user/ANNnewsCH/videos" "--count" "2" "--ignore-new" 
+```
+
 ## Requirements
 - python
 - pytube (in maintenance mode as of this writing, currently using [pytube-saguaro]( https://github.com/sluggish-yard/pytube-saguaro.git) fork

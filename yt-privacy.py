@@ -60,10 +60,14 @@ field_names = ['url', 'title', 'upload_time', 'keywords', 'privacystatus',
                'last_updated', 'timestamp', 'description', 'length']
 
 def main(args):
-    new_channel_vidurls = {channel : { url:{} for url in Channel(channel).video_urls[:args.count]} for channel in args.channels}
     channel_data = load_json_data(args.input)
 
-    new_channels_urls_pairs = [(channel, key) for channel, value in new_channel_vidurls.items() for key in value.keys()]
+    if not args.ignore_new:
+        new_channel_vidurls = {channel : { url:{} for url in Channel(channel).video_urls[:args.count]} for channel in args.channels}
+        new_channels_urls_pairs = [(channel, key) for channel, value in new_channel_vidurls.items() for key in value.keys()]
+    else:
+        new_channels_urls_pairs = []
+
     channels_urls_pairs = [(channel, key) for channel, value in channel_data.items() for key in value.keys()]
     merged_channels_urls = set(channels_urls_pairs).union(set(new_channels_urls_pairs))
 
@@ -112,6 +116,7 @@ if __name__ == '__main__':
     parser.add_argument('--max-retries', type=int, default=10, help='Maximum number of retries for retrieving video data')
     parser.add_argument('--input', default='video_data.json', help='Input file name')
     parser.add_argument('--output', default='video_data.json', help='Output file name')
+    parser.add_argument('--ignore-new', action='store_true', help='Ignore new videos and only check existing')
     args = parser.parse_args()
 
     ip_address = socket.gethostbyname('www.youtube.com')
